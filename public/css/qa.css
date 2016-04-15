@@ -1,0 +1,76 @@
+@media print {
+  html, body {
+    height: 99%;
+  }
+}
+
+body {
+  font-family: 'Roboto';
+  font-size: 12pt;
+  padding: 10px;
+  margin: 10px;
+}
+
+table,
+th {
+  font-size: 12pt;
+  color: #333333;
+  border-bottom: 1px solid #9aa5af;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+td {
+  padding-top: 5px;
+  padding-bottom : 5px;
+}
+button {
+  font-size: 12pt;
+}
+
+caption {
+  font-size: 14pt;
+  font-weight: 600;
+}
+.app-title {
+  font-size: 12pt;
+  font-weight: 600;
+}
+.boldlabel {
+  font-size: 11pt;
+  color: #1b5faa;
+  font-weight: 600;
+}
+.block,
+.title {
+
+}
+.block {
+  padding: 40px;
+}
+
+div {
+  margin : 10px;
+}
+
+.options {
+  margin-top : 10px;
+  margin-left : 30px;
+}
+
+
+.infomessage {
+  margin : 10px;
+  margin-left : 50px;
+  color : black;
+  font-family: 'Roboto';
+  font-size : 12pt;
+  padding  : 40px;
+}
+
+.bom-progress-bar {
+  position: absolute;
+  z-index: -5;
+}
