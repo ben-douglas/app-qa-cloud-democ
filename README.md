@@ -1,9 +1,9 @@
-#**app-qa**
-Sample app for QA
+#**app-qa-cloud**
+Sample app for QA (Cloud-Based)
 
-App QA is an node.js application demonstrating basic integrated app permissions
+App QA (Cloud-Based) is an node.js application demonstrating basic integrated app permissions
 
-####**Using QA**
+####**Using QA Cloud**
 
 Assuming it's already been setup in the dev-portal, you should be able to signup for the app in the appstore, then use
 the [+] menu to add the application to a document.
@@ -37,11 +37,11 @@ To register the new app, go to the Dev Portal, (Example: https://dev-portal.dev.
 Register a new OAuth application.  The output from Heroku should produce a new domain name to use for the
 iframe and redirect urls:
 
-    Application name (ex: Onshape QA Sample)
-    Application summary (one sentence; ex: "Onshape QA Sample application — source code is available.")
+    Application name (ex: Onshape QA Cloud Sample)
+    Application summary (one sentence; ex: "Onshape QA Cloud Sample application — source code is available.")
     iframe URL (ex: https://newURL-from-heroku.herokuapp.com/oauthSignin)
     Redirect URLs (ex: https://newURL-from-heroku.herokuapp.com/oauthRedirect)
-    Requested Format ID (ex: Onshape-Demo/QA)
+    Requested Format ID (ex: Onshape-Demo/QA-Cloud)
 
 Then in the Dev Portal create a new Store Entry for the Oauth Application you just created.
 
