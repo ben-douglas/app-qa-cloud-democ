@@ -16,15 +16,15 @@ Execute the following commands to create a duplicate of a repository; you need t
 mirror-push to an newly-created bare repo (please note that you may want to use SSH instead of HTTPS, depending on your
 Github settings):
 
-    $ git clone --bare https://github.com/onshape/app-qa.git
+    $ git clone --bare https://github.com/onshape/app-qa-cloud.git
        # make a bare clone of the repository
     
-    $ cd app-qa.git
+    $ cd app-qa-cloud.git
     $ git push --mirror https://github.com/exampleuser/new-respository.git
        # mirror-push to new respository
        
     $ cd ..
-    $ rm -rf app-qa.git
+    $ rm -rf app-qa-cloud.git
       # remove temporary local repository
 
 ######Deploy your repo on heroku
