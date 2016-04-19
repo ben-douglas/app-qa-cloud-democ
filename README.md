@@ -33,18 +33,21 @@ Github settings):
     $ cd new-repository
     $ heroku create
 
-To regsister the new app, go to the Dev Portal, https://dev-portal.dev.onshape.com. The output from Heroku should
-produce the domain name:
+To register the new app, go to the Dev Portal, (Example: https://dev-portal.dev.onshape.com).
+Register a new OAuth application.  The output from Heroku should produce a new domain name to use for the
+iframe and redirect urls:
 
     Application name (ex: Onshape QA Sample)
-    Application description (one sentence; ex: "Onshape QA Sample application — source code is available.")
-    URL for sign-in (ex: onshape-app-qa.herokuapp.com/oauthSignin)
-    URL for redirect (ex: onshape-app-qa.herokuapp.com/oauthRedirect)
+    Application summary (one sentence; ex: "Onshape QA Sample application — source code is available.")
+    iframe URL (ex: https://newURL-from-heroku.herokuapp.com/oauthSignin)
+    Redirect URLs (ex: https://newURL-from-heroku.herokuapp.com/oauthRedirect)
     Requested Format ID (ex: Onshape-Demo/QA)
+
+Then in the Dev Portal create a new Store Entry for the Oauth Application you just created.
 
 Onshape will register the app on Partner server and send back the OAUTH ID/Secret which are required for authentication.
 
-Make changes to code at two places for the new URL that Heroku has produced, as shown below:
+Make changes to code in one place for the new URL that Heroku has produced, as shown below:
 
     file# 1: ./package.json
        
@@ -55,20 +58,6 @@ Make changes to code at two places for the new URL that Heroku has produced, as 
        "url": "https://newURL-from-heroku.herokuapp.com/"
        },
        ...........
-       
-   And
-   
-    file# 2: ./authentication.js
-          
-        ........... 
-       passport.use(new OnshapeStrategy({
-         clientID: oauthClientId,
-         clientSecret: oauthClientSecret,
-         callbackURL: "https://newURL-from-heroku.herokuapp.com/oauthRedirect",
-         .............
-       },
-       function(accessToken, refreshToken, profile, done) {
-         ........... 
 
 Push the local repo code along with code changes to heruko
 

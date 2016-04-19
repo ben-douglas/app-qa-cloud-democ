@@ -53,7 +53,7 @@ app.use(session({
   store: new RedisStore({
     'client': client
   }),
-  secret: 'app-qa',
+  secret: 'app-qa-cloud',
   saveUninitialized: false,
   resave: false
 }));

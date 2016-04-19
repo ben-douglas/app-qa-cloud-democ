@@ -94,6 +94,13 @@ function refreshOAuthToken(req, res, next) {
 }
 
 function getAuthUri() {
+
+  /*
+   formData.add("grant_type", "password");
+   formData.add("username", username);
+   formData.add("password", password);
+   */
+
   return platformPath + '/oauth/authorize?response_type=code&client_id=' + oauthClientId;
 }
 

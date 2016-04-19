@@ -517,7 +517,7 @@ var addPartStudio = function(req, res) {
   });
 };
 
-var delElement = function(req, res) {
+var deleteElement = function(req, res) {
   request.del({
     uri: platformPath + '/api/elements/d/' + req.query.documentId + '/w/' + req.query.workspaceId + '/e/' + req.query.elementId,
     headers: {
@@ -528,7 +528,7 @@ var delElement = function(req, res) {
   }).catch(function(data) {
     if (data.statusCode === 401) {
       authentication.refreshOAuthToken(req, res).then(function() {
-        delElement(req, res);
+        deleteElement(req, res);
       }).catch(function(err) {
         console.log('*** Error refreshing token or deleting element');
         sendError(res, err);
@@ -538,7 +538,57 @@ var delElement = function(req, res) {
       sendError(res, data);
     }
   });
-}
+};
+
+var createDocument = function(req, res) {
+  request.post({
+    uri: platformPath + '/api/documents',
+    body: {
+      name: req.query.name
+    },
+    headers: {
+      'Authorization': 'Bearer ' + req.user.accessToken
+    },
+    json: true
+  }).then(function(data) {
+    res.send(data);
+  }).catch(function(data) {
+    if (data.statusCode === 401) {
+      authentication.refreshOAuthToken(req, res).then(function() {
+        createDocument(req, res);
+      }).catch(function(err) {
+        console.log('*** Error refreshing token or creating document');
+        sendError(res, err);
+      });
+    } else {
+      console.log('*** CREATE /api/documents error (' + data.statusCode + ')');
+      sendError(res, data);
+    }
+  });
+};
+
+var deleteDocument = function(req, res) {
+  request.del({
+    uri: platformPath + '/api/documents/d/' + req.query.documentId,
+    headers: {
+      'Authorization': 'Bearer ' + req.user.accessToken
+    }
+  }).then(function(data) {
+    res.send(true);
+  }).catch(function(data) {
+    if (data.statusCode === 401) {
+      authentication.refreshOAuthToken(req, res).then(function() {
+        deleteDocument(req, res);
+      }).catch(function(err) {
+        console.log('*** Error refreshing token or deleting document');
+        sendError(res, err);
+      });
+    } else {
+      console.log('*** DELETE /api/documents error (' + data.statusCode + ')');
+      sendError(res, data);
+    }
+  });
+};
 
 function sendError(res, data) {
   if (typeof data.statusCode === 'number') {
@@ -570,6 +620,8 @@ router.get('/accounts', getAccounts);
 router.get('/workspace', getWorkspace);
 router.get('/versions', getVersions);
 router.get('/newps', addPartStudio);
-router.get('/delelement', delElement);
+router.get('/delelement', deleteElement);
+router.get('/newdoc', createDocument);
+router.get('/deldoc', deleteDocument);
 
 module.exports = router;

@@ -13,8 +13,8 @@ $(document).ready(function() {
 
   // connect the button
   $("#element-list-docs").button().click(onListDocuments);
-  $("#element-create-ps").button().click(onCreatePS);
-  $("#element-delete-ps").button().click(onDeletePS);
+  $("#element-create-doc").button().click(onCreateDoc);
+  $("#element-delete-doc").button().click(onDeleteDoc);
 
   // Hold onto the current session information
   theContext.documentId = theQuery.documentId;
@@ -33,7 +33,7 @@ function onListDocuments() {
     type: 'GET',
     success: function(data) {
       $("#document-list").append('Got ' + data.items.length + ' documents');
-      $("#document-list").append('<br>NOTE: Currently no pagination');
+      $("#document-list").append('<br>&nbsp;&nbsp;&nbsp;<b>NOTE: Currently no pagination</b>');
     },
     error: function(data) {
       $("#document-list").append('Got error <pre>' + JSON.stringify(data, null, 2) + '</pre>');
@@ -41,75 +41,67 @@ function onListDocuments() {
   });
 }
 
-function onCreatePS() {
-  $("#create-ps").empty();
-  $("#create-ps").append('Checking for existing element...');
-  $.ajax('/api/elements'+
-    "?documentId=" + theContext.documentId +
-    "&workspaceId=" + theContext.workspaceId, {
+function onCreateDoc() {
+  $("#create-doc").empty();
+  $("#create-doc").append('Checking for existing document...');
+  $.ajax('/api/documents', {
     dataType: 'json',
     type: 'GET',
     success: function(data) {
       for (var i = 0; i < data.length; i++) {
-        if (data[i].name == 'QA PartStudio') {
-          $("#create-ps").append('<br>Already have QA PartStudio (' + data[i].id + ')');
+        if (data[i].name == 'QA Test Document') {
+          $("#create-doc").append('<br>Already have QA Test Document (' + data[i].id + ')');
           return data[i];
         }
       }
-      $("#create-ps").append('<br>Creating new QA Partstudio...');
-      return $.ajax('/api/newps' +
-        "?documentId=" + theContext.documentId +
-        "&workspaceId=" + theContext.workspaceId +
-        "&name=QA+PartStudio",
+      $("#create-doc").append('<br>Creating new QA Test Document...');
+      return $.ajax('/api/newdoc' +
+        "?name=QA+Test+Document",
         {
           dataType: 'json',
           type: 'GET',
           success: function(data) {
-            $("#create-ps").append('<br>Created QA PartStudio (' + data.id + ')');
+            $("#create-doc").append('<br>Created QA Test Document (' + data.id + ')');
           },
           error: function(data) {
-            $("#create-ps").append('<br>Got error creating partstudio: <pre>' + JSON.stringify(data, null, 2) + '</pre>');
+            $("#create-doc").append('<br>Got error creating doc: <pre>' + JSON.stringify(data, null, 2) + '</pre>');
           }
         });
     },
     error: function(data) {
-      $("#create-ps").append('<br>Got error checking elements <pre>' + JSON.stringify(data, null, 2) + '</pre>');
+      $("#create-doc").append('<br>Got error checking documents <pre>' + JSON.stringify(data, null, 2) + '</pre>');
     }
   });
 }
 
-function onDeletePS() {
-  $("#delete-ps").empty();
-  $("#delete-ps").append('Checking for existing element...');
-  $.ajax('/api/elements'+
-    "?documentId=" + theContext.documentId +
-    "&workspaceId=" + theContext.workspaceId, {
+function onDeleteDoc() {
+  $("#delete-doc").empty();
+  $("#delete-doc").append('Checking for existing element...');
+  $.ajax('/api/documents', {
     dataType: 'json',
     type: 'GET',
     success: function(data) {
       for (var i = 0; i < data.length; i++) {
-        if (data[i].name == 'QA PartStudio') {
-          $("#delete-ps").append('<br>Found PartStudio... deleting...');
-          return $.ajax('/api/delelement' +
-            "?documentId=" + theContext.documentId +
-            "&workspaceId=" + theContext.workspaceId +
-            "&elementId=" + data[i].id,
+        if (data[i].name == 'QA Test Document') {
+          $("#delete-doc").append('<br>Found QA Test Document... deleting...');
+          return $.ajax('/api/deldoc' +
+            "?documentId=" + theContext.documentId,
             {
               dataType: 'json',
               type: 'GET',
               success: function() {
-                $("#delete-ps").append('<br>Deleted QA PartStudio');
+                $("#delete-doc").append('<br>Deleted QA Test Document');
               },
               error: function(data) {
-                $("#delete-ps").append('<br>Got error deleting partstudio: <pre>' + JSON.stringify(data, null, 2) + '</pre>');
+                $("#delete-doc").append('<br>Got error deleting document: <pre>' + JSON.stringify(data, null, 2) + '</pre>');
               }
             });
         }
       }
-      $("#delete-ps").append('<br>No QA PartStudio to delete');
+      $("#delete-doc").append('<br>No QA Test Document to delete');
     },
     error: function(data) {
-      $("#delete-ps").append('<br>Got error checking elements for deletion<pre>' + JSON.stringify(data, null, 2) + '</pre>');
+      $("#delete-doc").append('<br>Got error checking documents for deletion<pre>' + JSON.stringify(data, null, 2) + '</pre>');
     }
   });
 }
