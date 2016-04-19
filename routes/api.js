@@ -569,7 +569,7 @@ var createDocument = function(req, res) {
 
 var deleteDocument = function(req, res) {
   request.del({
-    uri: platformPath + '/api/documents/d/' + req.query.documentId,
+    uri: platformPath + '/api/documents/' + req.query.documentId,
     headers: {
       'Authorization': 'Bearer ' + req.user.accessToken
     }

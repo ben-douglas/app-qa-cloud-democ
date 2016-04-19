@@ -48,10 +48,10 @@ function onCreateDoc() {
     dataType: 'json',
     type: 'GET',
     success: function(data) {
-      for (var i = 0; i < data.length; i++) {
-        if (data[i].name == 'QA Test Document') {
-          $("#create-doc").append('<br>Already have QA Test Document (' + data[i].id + ')');
-          return data[i];
+      for (var i = 0; i < data.items.length; i++) {
+        if (data.items[i].name == 'QA Test Document') {
+          $("#create-doc").append('<br>Already have QA Test Document (' + data.items[i].id + ')');
+          return data.items[i];
         }
       }
       $("#create-doc").append('<br>Creating new QA Test Document...');
@@ -61,7 +61,7 @@ function onCreateDoc() {
           dataType: 'json',
           type: 'GET',
           success: function(data) {
-            $("#create-doc").append('<br>Created QA Test Document (' + data.id + ')');
+            $("#create-doc").append('<br>Created QA Test Document: (' + data.id + ')');
           },
           error: function(data) {
             $("#create-doc").append('<br>Got error creating doc: <pre>' + JSON.stringify(data, null, 2) + '</pre>');
@@ -81,11 +81,11 @@ function onDeleteDoc() {
     dataType: 'json',
     type: 'GET',
     success: function(data) {
-      for (var i = 0; i < data.length; i++) {
-        if (data[i].name == 'QA Test Document') {
+      for (var i = 0; i < data.items.length; i++) {
+        if (data.items[i].name == 'QA Test Document') {
           $("#delete-doc").append('<br>Found QA Test Document... deleting...');
           return $.ajax('/api/deldoc' +
-            "?documentId=" + theContext.documentId,
+            "?documentId=" + data.items[i].id,
             {
               dataType: 'json',
               type: 'GET',
@@ -236,7 +236,7 @@ function refreshContextElements() {
     },
     error: function(data) {
       displayAlert('Error getting /api/session');
-      $('#session-info').append('Error getting session info <pre>' + data + '</pre>');
+      $('#session-info').append('Error getting session info <pre>' + JSON.stringify(data, null, 2) + '</pre>');
     }
   });
 }
