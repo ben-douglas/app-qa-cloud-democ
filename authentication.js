@@ -81,11 +81,12 @@ function refreshOAuthToken(req, res, next) {
     }).catch(function(error) {
       delete pendingTokenRefreshes[req.session.id];
       console.log('Error refreshing OAuth Token: ', error);
-      res.status(401).send({
+      res.status(499).send({
         authUri: getAuthUri(),
         msg: 'Authentication required.'
       });
-      throw(error);
+      return Promise.reject('Error refreshing OAuth Token');
+      // throw(error);
     });
     return pendingTokenRefreshes[req.session.id];
   } else {
